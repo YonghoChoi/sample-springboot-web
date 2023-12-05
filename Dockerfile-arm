@@ -1,11 +1,11 @@
-FROM maven AS build-stage
+FROM arm64v8/maven AS build-stage
 ENV APP_NAME=sample-web
 WORKDIR /opt/$APP_NAME
 
 COPY . .
 RUN mvn package
 
-FROM amazoncorretto:21-alpine
+FROM arm64v8/amazoncorretto:21-alpine
 ENV APP_NAME=sample-web
 COPY --from=build-stage /opt/$APP_NAME/target/$APP_NAME.jar /app/$APP_NAME.jar
 
